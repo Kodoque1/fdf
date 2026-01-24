@@ -1,0 +1,9 @@
+[submodule "gnl"]
+	path = gnl
+	url = https://github.com/Kodoque1/get_next_line.git
+[submodule "libft"]
+	path = libft
+	url = https://github.com/Kodoque1/libft.git
+[submodule "libprintf"]
+	path = libprintf
+	url = https://github.com/Kodoque1/ft_printf.git
