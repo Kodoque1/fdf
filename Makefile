@@ -1,5 +1,5 @@
 NAME := fdf
-SRC :=  main.c
+SRC :=  main.c ft_utils.c ft_draw_utils.c ft_draw_map.c ft_3d.c fdf_parse.c
 OBJ  := $(SRC:.c=.o)
 
 # === DEPS DIR ===
@@ -7,13 +7,14 @@ OBJ  := $(SRC:.c=.o)
 LIBFT_DIR = libft
 LIBPRINTF_DIR = libprintf
 LIBGNL_DIR = gnl
+MINILIBX_DIR = mlx
 
 # === DEPS NAME ===
 
 LIBFT = $(LIBFT_DIR)/libft.a
 LIBPRINTF = $(LIBPRINTF_DIR)/libftprintf.a
 LIBGNL = $(LIBGNL_DIR)/libgnl.a
-MINILIBX = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+MINILIBX = -L$(MINILIBX_DIR) -l$(MINILIBX_DIR) -L/usr/lib -lXext -lX11 -lm -lz
 
 # === UTILS ===
 
@@ -23,8 +24,8 @@ RM := rm -f
 
 CC := cc
 CFLAGS := -Werror -Wextra -Wall -g3
-INCLUDES = -I/usr/include -Imlx_linux -I includes -I $(LIBFT_DIR)/includes -I $(LIBPRINTF_DIR)/includes -I $(LIBGNL_DIR)/includes
-LIBS = $(MINILIBX)$(LIBPRINTF) $(LIBFT) $(LIBGNL)
+INCLUDES = -I/usr/include -I$(MINILIBX_DIR) -I includes -I $(LIBFT_DIR)/includes -I $(LIBPRINTF_DIR)/includes -I $(LIBGNL_DIR)/includes
+LIBS = $(LIBPRINTF) $(LIBGNL) $(LIBFT) $(MINILIBX)
 
 # === MAIN RULE ===
 
@@ -34,7 +35,7 @@ LIBS = $(MINILIBX)$(LIBPRINTF) $(LIBFT) $(LIBGNL)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) $(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) $(LIBS) $(MINILIBX) -o $(NAME)
 
 # === DEPS BUILD ===
 
@@ -47,12 +48,16 @@ $(LIBPRINTF):
 $(LIBGNL):
 	$(MAKE) -C $(LIBGNL_DIR)
 
+$(MINILIBX):
+	$(MAKE) -C $(MINILIBX_DIR)
+
 # === CLEANING UP ===
 
 clean:
-	make -C $(LIBFT_DIR) clean
-	make -C $(LIBPRINTF_DIR) clean
-	make -C $(LIBGNL_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(LIBPRINTF_DIR) clean
+	$(MAKE) -C $(LIBGNL_DIR) clean
+	$(MAKE) -C $(MINILIBX_DIR) clean
 	$(RM) $(OBJ) $(OBJ:.o=.d)
 
 fclean: clean

@@ -1,0 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/25 10:01:40 by zaddi             #+#    #+#             */
+/*   Updated: 2026/01/25 16:28:02 by zaddi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_fdf.h"
+
+t_point	*create_point(int x, int y, int z)
+{
+	t_point	*point;
+
+	point = malloc(sizeof(t_point));
+	point->x = x;
+	point->y = y;
+	point->z = z;
+	return (point);
+}
+
+void	set_point(t_point *point, int x, int y, int z)
+{
+	point->x = x;
+	point->y = y;
+	point->z = z;
+}
+
+void	init_contiguous(t_map *map)
+{
+	t_point	*all_points;
+	int		i;
+
+	map->map = malloc(map->h * sizeof(t_point *));
+	all_points = (t_point *) malloc(map->w * map->h * sizeof(t_point));
+	ft_memset(all_points, 0, map->w * map->h * sizeof(t_point));
+	i = 0;
+	while (i < map->h)
+	{
+		map->map[i] = &all_points[i * map->w];
+		i++;
+	}
+}

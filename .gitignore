@@ -56,3 +56,4 @@ dkms.conf
 
 *.json
 *.py
+!mlx_linux/

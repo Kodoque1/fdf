@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:04:11 by zaddi             #+#    #+#             */
-/*   Updated: 2026/01/24 17:50:51 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/01/25 17:11:13 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
+	//ft_printf("x:%d, y:%d\n", x, y);
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
@@ -38,7 +39,7 @@ void	init_delta_sign(t_point *d, t_point *s, t_point p0, t_point p1)
 		s->y = -1;
 }
 
-void	line(t_point p0, t_point p1, t_data *data, int color)
+void	draw_line(t_point p0, t_point p1, t_data *data, int color)
 {
 	t_point	d;
 	t_point	s;
@@ -60,3 +61,4 @@ void	line(t_point p0, t_point p1, t_data *data, int color)
 		}
 	}
 }
+
