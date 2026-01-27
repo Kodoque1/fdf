@@ -44,7 +44,7 @@ int	process_entry(char *entry, t_map *map, int i, int j)
 {
 	if (entry) 
 	{
-		set_point(&(map->map[j][i]), i, j, ft_atoi(entry) / 10);
+		set_point(&(map->map[j][i]), i, j, ft_atoi(entry) * 2);
 		return (0);
 	}
 	ft_printf("entry:%s\n", entry);

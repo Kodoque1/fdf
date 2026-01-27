@@ -66,8 +66,9 @@ void	scale_and_center(t_map *map)
 		j = 0;
 		while (j < map->w)
 		{
-			ft_translate(&(map->map[i][j]), -(map->w / 2), -(map->h / 2), 0);
+			ft_translate(&(map->map[i][j]), -map->w / 2, -map->h / 2, 0);
 			ft_scale(&(map->map[i][j]), sx, sy, 1);
+			point_iso_proj(&(map->map[i][j]));
 			ft_translate(&(map->map[i][j]), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
 				0);
 			j++;

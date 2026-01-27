@@ -18,7 +18,7 @@
 # define N1_SQR6 0.40824829
 # define SCREEN_WIDTH 800
 # define SCREEN_HEIGHT 600
-# define SCREEN_FACTOR 0.4
+# define SCREEN_FACTOR 0.8
 
 # include "ft_printf.h"
 # include "get_next_line.h"
