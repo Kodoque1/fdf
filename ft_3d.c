@@ -47,7 +47,6 @@ void	map_iso_proj(t_map *map)
 			point_iso_proj(&(map->map[i][j]));
 			j++;
 		}
-
 		i++;
 	}
 }
