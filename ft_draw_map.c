@@ -18,6 +18,7 @@ void	draw_rows(t_map *map, int i, t_data *data, int color)
 
 	j = 0;
 	while (j < (map->w - 1))
+	//while (j < 1)
 	{
 		draw_line(map->map[i][j], map->map[i][j + 1], data, color);
 		j++;
@@ -30,6 +31,7 @@ void	draw_columns(t_map *map, int j, t_data *data, int color)
 
 	i = 0;
 	while (i < (map->h - 2))
+	//while (i < 1)
 	{
 		draw_line(map->map[i][j], map->map[i + 1][j], data, color);
 		i++;
@@ -42,12 +44,14 @@ void	draw_map(t_map *map, t_data *data, int color)
 
 	i = 0;	//while (i < 1)
 	while (i < map->h)
+	//while (i < 1)
 	{
 		draw_rows(map, i, data, color);
 		i++;
 	}
 	i = 0;
 	while (i < map->w)
+	//while (i < 1)
 	{
 		draw_columns(map, i, data, color);
 		i++;

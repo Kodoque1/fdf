@@ -28,8 +28,8 @@ void	ft_scale(t_point *point, float sx, float sy, float sz)
 
 void	point_iso_proj(t_point *point)
 {
-	point->x = SQR3_SQR6 * (point->x - point->z);
-	point->y = N1_SQR6 * (2 * point->y - (point->x + point->z));
+	point->x = SQR3_SQR6 * (point->x - point->y);
+	point->y = N1_SQR6 * ((point->x + point->y)) - point->z;
 	point->z = SQR2_SQR6 * (point->x + point->y + point->z);
 }
 
