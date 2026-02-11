@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 15:04:15 by zaddi             #+#    #+#             */
-/*   Updated: 2026/01/25 17:03:03 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/11 20:12:26 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # define N1_SQR6 0.40824829
 # define SCREEN_WIDTH 800
 # define SCREEN_HEIGHT 600
-# define SCREEN_FACTOR 0.8
+# define WHITE 0xFFFFFF
+# define VIOLET 0x7F00FF
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -54,17 +55,21 @@ typedef struct s_map
 {
 	int		w;
 	int		h;
+	int		min_z;
+	int		max_z;
 	t_point	**map;
 }			t_map;
 
 t_point		*create_point(int x, int y, int z);
 void		set_point(t_point *point, int x, int y, int z);
 int			parse_map(char *path, t_map *map);
-void		draw_line(t_point p0, t_point p1, t_data *data, int color);
+void		draw_line(t_point p0, t_point p1, t_data *data, int c[2]);
 void		map_iso_proj(t_map *map);
 void		draw_map(t_map *map, t_data *data, int color);
 void		ft_translate(t_point *point, int x, int y, int z);
 void		scale_and_center(t_map *map);
 void		init_contiguous(t_map *map);
+int			interpolate(int c[2], float f);
+int			p2c(t_map *map, t_point p);
 
 #endif

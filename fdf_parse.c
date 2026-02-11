@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:01:34 by zaddi             #+#    #+#             */
-/*   Updated: 2026/01/25 16:56:34 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/11 19:40:27 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,18 @@ int	rows_and_columns_size(char *path, t_map *map)
 
 int	process_entry(char *entry, t_map *map, int i, int j)
 {
-	if (entry) 
+	int	e2i;
+
+	if (entry)
 	{
-		set_point(&(map->map[j][i]), i, j, ft_atoi(entry) * 2);
+		e2i = ft_atoi(entry);
+		if (e2i < map->min_z)
+			map->min_z = e2i;
+		if (e2i > map->max_z)
+			map->max_z = e2i;
+		set_point(&(map->map[j][i]), i, j, ft_atoi(entry));
 		return (0);
 	}
-	ft_printf("entry:%s\n", entry);
 	return (-1);
 }
 
@@ -85,9 +91,10 @@ int	parse_map(char *path, t_map *map)
 	int	j;
 	int	f;
 
+	map->max_z = -2147483648;
+	map->min_z = 2147483647;
 	if (rows_and_columns_size(path, map) == -1)
 		return (-1);
-	ft_printf("w:%d, h:%d\n", map->w, map->h);
 	init_contiguous(map);
 	if (!map)
 		return (-1);
@@ -97,13 +104,8 @@ int	parse_map(char *path, t_map *map)
 	j = 0;
 	while (j < map->h)
 	{
-		ft_printf("i:%d\n", j);
 		if (process_line(get_next_line(f), map, j) == -1)
-		{
-			ft_printf("break\n", j);
 			return (-1);
-		}
-
 		j++;
 	}
 	close(f);

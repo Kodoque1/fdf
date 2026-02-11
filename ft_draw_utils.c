@@ -6,19 +6,23 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:04:11 by zaddi             #+#    #+#             */
-/*   Updated: 2026/01/25 17:11:13 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/11 20:15:03 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_data *data, t_point p, int color)
 {
 	char	*dst;
 
-	//ft_printf("x:%d, y:%d\n", x, y);
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	if ((SCREEN_WIDTH >= p.x) && (p.x >= 0) && (SCREEN_HEIGHT >= p.y)
+		&& (p.y >= 0))
+	{
+		dst = data->addr + (p.y * data->line_length + p.x
+				* (data->bits_per_pixel / 8));
+		*(unsigned int *)dst = color;
+	}
 }
 
 void	init_delta_sign(t_point *d, t_point *s, t_point p0, t_point p1)
@@ -39,15 +43,17 @@ void	init_delta_sign(t_point *d, t_point *s, t_point p0, t_point p1)
 		s->y = -1;
 }
 
-void	draw_line(t_point p0, t_point p1, t_data *data, int color)
+void	draw_line(t_point p0, t_point p1, t_data *data, int c[2])
 {
 	t_point	d;
 	t_point	s;
+	float	f;
 
 	init_delta_sign(&d, &s, p0, p1);
+	f = 0;
 	while (!(p0.x == p1.x && p0.y == p1.y))
 	{
-		my_mlx_pixel_put(data, p0.x, p0.y, color);
+		my_mlx_pixel_put(data, p0, interpolate(c, f));
 		s.z = d.z;
 		if (s.z > -d.x)
 		{
@@ -61,4 +67,3 @@ void	draw_line(t_point p0, t_point p1, t_data *data, int color)
 		}
 	}
 }
-
