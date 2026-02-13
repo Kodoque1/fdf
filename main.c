@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 15:04:29 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/11 19:34:31 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/13 19:44:23 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	close_window(int keycode, t_vars *vars)
 {
-	(void)keycode;
+	if (keycode == ;
 	mlx_destroy_window(vars->mlx, vars->win);
 	return (0);
 }
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 	t_vars	vars;
 	t_data	img;
 
-	if ((argc != 2) && !check_extension(argv[1]))
+	if ((argc != 2) || !check_extension(argv[1]))
 	{
 		ft_printf("usage: ./fdf map.fdf\n");
 		exit(-1);
@@ -48,7 +48,7 @@ int	main(int argc, char **argv)
 				&img.line_length, &img.endian);
 		parse_map(argv[1], &map);
 		scale_and_center(&map);
-		draw_map(&map, &img, 0xFFFFFF);
+		draw_map(&map, &img);
 		mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 		mlx_loop(vars.mlx);
 		mlx_hook(vars.win, 2, 1L << 0, close_window, &vars);

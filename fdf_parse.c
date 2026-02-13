@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:01:34 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/11 19:40:27 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/13 17:04:08 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,14 @@ int	rows_and_columns_size(char *path, t_map *map)
 	if (f == -1)
 		return (-1);
 	buf = get_next_line(f);
-	if (buf)
+	map->w = count_word(buf, ' ');
+	while (buf)
 	{
-		map->w = count_word(buf, ' ');
-		map->h = 1;
-		while (buf)
-		{
-			if (count_word(buf, ' ') != map->w)
-				return (-1);
-			buf = get_next_line(f);
-			(map->h)++;
-		}
-		if (close(f) == -1)
-			return (-1);
+		buf = get_next_line(f);
+		(map->h)++;
 	}
+	if (close(f) == -1)
+		return (-1);
 	return (0);
 }
 

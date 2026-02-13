@@ -6,11 +6,12 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:04:11 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/11 20:15:03 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/13 17:41:02 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
+#include "stdio.h"
 
 void	my_mlx_pixel_put(t_data *data, t_point p, int color)
 {
@@ -47,23 +48,27 @@ void	draw_line(t_point p0, t_point p1, t_data *data, int c[2])
 {
 	t_point	d;
 	t_point	s;
+	float	td;
 	float	f;
 
 	init_delta_sign(&d, &s, p0, p1);
-	f = 0;
+	td = d.x + d.y;
+	f = 0.;
 	while (!(p0.x == p1.x && p0.y == p1.y))
 	{
-		my_mlx_pixel_put(data, p0, interpolate(c, f));
+		my_mlx_pixel_put(data, p0, inter_color(c, f / (float)td));
 		s.z = d.z;
 		if (s.z > -d.x)
 		{
 			d.z -= d.y;
 			p0.x += s.x;
+			f += 1.;
 		}
 		if (s.z < d.y)
 		{
 			d.z += d.x;
 			p0.y += s.y;
+			f += 1.;
 		}
 	}
 }

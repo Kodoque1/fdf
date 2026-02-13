@@ -6,29 +6,55 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:14:39 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/11 20:03:33 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/13 17:41:20 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
+#include "stdio.h"
 
-int	interpolate(int c[2], float f)
+int	bytes(int n, int i)
 {
-	int		rgb[3];
+	return ((n >> (8 * i)) & 0xFF);
+}
+
+int	interpolate(int v1, int v2, float f)
+{
 	float	cf;
 
-	cf = 1 - f;
-	rgb[0] = ((c[0] && 0xFF) * f + (c[1] && 0xFF) * cf);
-	rgb[1] = ((c[0] && 0xFF00) * f + (c[1] && 0xFF00) * cf);
-	rgb[2] = ((c[0] && 0xFF0000) * f + (c[1] && 0xFF0000) * cf);
-	return (rgb[0] && 0xFF + rgb[1] && 0xFF + rgb[2] && 0xFF);
+	if (f > 1.)
+		f = 1.;
+	else if (f < 0.)
+		f = 0.;
+	cf = 1. - f;
+	return (v1 * cf + v2 * f);
+}
+
+int	inter_color(int c[2], float f)
+{
+	int	i;
+	int	final_color;
+
+	final_color = 0;
+	i = 0;
+	while (i < 3)
+	{
+		final_color += (interpolate(bytes(c[0], i), bytes(c[1], i),
+					f) & 0xFF) << (8 * i);
+		i++;
+	}
+	return (final_color);
 }
 
 int	p2c(t_map *map, t_point p)
 {
 	float	f;
-	float	cf;
+	int		c[2];
 
-	f = ft_abs(p.z - map->min_z) / ft_abs(map->max_z - map->min_z);
-	return (WHITE * f + WHITE * (1 - f));
+	if (map->max_z == map->min_z)
+		return (WHITE);
+	c[0] = WHITE;
+	c[1] = VIOLET;
+	f = (float)(p.z - map->min_z) / (float)(map->max_z - map->min_z);
+	return (inter_color(c, f));
 }

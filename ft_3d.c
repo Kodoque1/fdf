@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 11:30:57 by zaddi             #+#    #+#             */
-/*   Updated: 2026/01/25 16:40:34 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/13 18:09:45 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	point_iso_proj(t_point *point)
 {
 	point->x = SQR3_SQR6 * (point->x - point->y);
 	point->y = N1_SQR6 * ((point->x + point->y)) - point->z;
-	point->z = SQR2_SQR6 * (point->x + point->y + point->z);
 }
 
 void	map_iso_proj(t_map *map)
@@ -59,8 +58,8 @@ void	scale_and_center(t_map *map)
 	int	sy;
 
 	i = 0;
-	sx = SCREEN_WIDTH / map->w * SCREEN_FACTOR;
-	sy = SCREEN_HEIGHT / map->h * SCREEN_FACTOR;
+	sx = SCREEN_WIDTH / map->w * 0.75;
+	sy = SCREEN_HEIGHT / map->h * 0.75;
 	while (i < map->h)
 	{
 		j = 0;

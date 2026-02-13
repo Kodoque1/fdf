@@ -1,5 +1,5 @@
 NAME := fdf
-SRC :=  main.c ft_utils.c ft_draw_utils.c ft_draw_map.c ft_3d.c fdf_parse.c
+SRC :=  main.c ft_utils.c ft_draw_utils.c ft_draw_map.c ft_3d.c fdf_parse.c ft_interpolate.c
 OBJ  := $(SRC:.c=.o)
 
 # === DEPS DIR ===
