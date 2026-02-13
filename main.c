@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 15:04:29 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/13 19:44:23 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/13 22:20:30 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	close_window(int keycode, t_vars *vars)
 {
-	if (keycode == ;
+	(void) keycode;
 	mlx_destroy_window(vars->mlx, vars->win);
 	return (0);
 }
@@ -50,7 +50,6 @@ int	main(int argc, char **argv)
 		scale_and_center(&map);
 		draw_map(&map, &img);
 		mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-		mlx_loop(vars.mlx);
 		mlx_hook(vars.win, 2, 1L << 0, close_window, &vars);
 		mlx_loop(vars.mlx);
 	}
