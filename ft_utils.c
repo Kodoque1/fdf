@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 10:01:40 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/11 17:21:01 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/19 18:06:55 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,17 @@ void	init_contiguous(t_map *map)
 	{
 		map->map[i] = &all_points[i * map->w];
 		i++;
+	}
+}
+
+void	free_map(t_map *map)
+{
+	if (!map)
+		return ;
+	if (map->map)
+	{
+		if (map->map[0])
+			free(map->map[0]);
+		free(map->map);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:04:11 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/12 12:31:00 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/19 18:16:18 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	init_delta_sign(t_point *d, t_point *s, t_point p0, t_point p1)
 
 void	draw_line(t_point p0, t_point p1, t_data *data, int c[2])
 {
-	t_point	d;
-	t_point	s;
-	int		steps;
-	int		i;
-	float	f;
+	t_point		d;
+	t_point		s;
+	unsigned int	steps;
+	int			i;
+	float		f;
 
 	init_delta_sign(&d, &s, p0, p1);
 	steps = ft_abs(p1.x - p0.x);

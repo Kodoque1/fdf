@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:14:39 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/12 12:34:00 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/19 18:16:18 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,7 @@ int	p2c(t_map *map, t_point p)
 	if (range == 0)
 		return (WHITE);
 	f = (float)(p.z - map->min_z) / (float)range;
-	if (f < 0.5f)
-	{
-		c[0] = VIOLET;
-		c[1] = WHITE;
-		return (interpolate(c, f * 2.0f));
-	}
 	c[0] = WHITE;
-	c[1] = 0x88CCFF;
-	return (interpolate(c, (f - 0.5f) * 2.0f));
+	c[1] = VIOLET;
+	return (interpolate(c, f));
 }

@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 15:04:15 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/11 20:12:26 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/19 18:10:51 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define SCREEN_FACTOR 0.7
 # define WHITE 0xFFFFFF
 # define VIOLET 0x7F00FF
+# define CYAN 0x00FFFF
 
 # include "ft_printf.h"
 # include "get_next_line.h"
@@ -40,12 +41,6 @@ typedef struct s_data
 	int		endian;
 }			t_data;
 
-typedef struct s_vars
-{
-	void	*mlx;
-	void	*win;
-}			t_vars;
-
 typedef struct s_point
 {
 	int		x;
@@ -62,6 +57,14 @@ typedef struct s_map
 	t_point	**map;
 }			t_map;
 
+typedef struct s_vars
+{
+	void	*mlx;
+	void	*win;
+	t_map	*map;
+	t_data	*img;
+}			t_vars;
+
 t_point		*create_point(int x, int y, int z);
 void		set_point(t_point *point, int x, int y, int z);
 int			parse_map(char *path, t_map *map);
@@ -71,6 +74,7 @@ void		draw_map(t_map *map, t_data *data, int color);
 void		ft_translate(t_point *point, int x, int y, int z);
 void		scale_and_center(t_map *map);
 void		init_contiguous(t_map *map);
+void		free_map(t_map *map);
 int			interpolate(int c[2], float f);
 int			p2c(t_map *map, t_point p);
 

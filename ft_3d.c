@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 11:30:57 by zaddi             #+#    #+#             */
-/*   Updated: 2026/01/25 16:40:34 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/19 18:14:41 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	point_iso_proj(t_point *point)
 {
 	point->x = SQR3_SQR6 * (point->x - point->y);
 	point->y = N1_SQR6 * ((point->x + point->y)) - point->z;
-	point->z = SQR2_SQR6 * (point->x + point->y + point->z);
 }
 
 void	map_iso_proj(t_map *map)
