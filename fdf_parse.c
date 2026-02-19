@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:01:34 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/12 12:38:00 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/19 18:25:00 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,18 +86,17 @@ int	parse_map(char *path, t_map *map)
 	map->min_z = 2147483647;
 	if (rows_and_columns_size(path, map) == -1)
 		return (-1);
-	init_contiguous(map);
-	if (!map->map)
+	if (init_contiguous(map) == -1)
 		return (-1);
 	f = open(path, O_RDONLY);
 	if (f == -1)
-		return (-1);
+		return (free_map(map), -1);
 	j = 0;
 	while (j < map->h)
 	{
 		line = get_next_line(f);
 		if (process_line(line, map, j) == -1)
-			return (close(f), -1);
+			return (close(f), free_map(map), -1);
 		j++;
 	}
 	close(f);

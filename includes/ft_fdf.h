@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 15:04:15 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/19 18:10:51 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/19 18:25:00 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void		map_iso_proj(t_map *map);
 void		draw_map(t_map *map, t_data *data, int color);
 void		ft_translate(t_point *point, int x, int y, int z);
 void		scale_and_center(t_map *map);
-void		init_contiguous(t_map *map);
+int		init_contiguous(t_map *map);
 void		free_map(t_map *map);
 int			interpolate(int c[2], float f);
 int			p2c(t_map *map, t_point p);

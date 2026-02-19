@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 10:01:40 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/19 18:06:55 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/19 18:25:00 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,21 @@ void	set_point(t_point *point, int x, int y, int z)
 	point->z = z;
 }
 
-void	init_contiguous(t_map *map)
+int	init_contiguous(t_map *map)
 {
 	t_point	*all_points;
 	int		i;
 
 	map->map = malloc(map->h * sizeof(t_point *));
+	if (!map->map)
+		return (-1);
 	all_points = (t_point *) malloc(map->w * map->h * sizeof(t_point));
+	if (!all_points)
+	{
+		free(map->map);
+		map->map = NULL;
+		return (-1);
+	}
 	ft_memset(all_points, 0, map->w * map->h * sizeof(t_point));
 	i = 0;
 	while (i < map->h)
@@ -44,6 +52,7 @@ void	init_contiguous(t_map *map)
 		map->map[i] = &all_points[i * map->w];
 		i++;
 	}
+	return (0);
 }
 
 void	free_map(t_map *map)
