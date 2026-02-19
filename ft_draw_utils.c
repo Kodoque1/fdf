@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:04:11 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/11 20:15:03 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/12 12:31:00 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	my_mlx_pixel_put(t_data *data, t_point p, int color)
 {
 	char	*dst;
 
-	if ((SCREEN_WIDTH >= p.x) && (p.x >= 0) && (SCREEN_HEIGHT >= p.y)
-		&& (p.y >= 0))
+	if ((p.x >= 0) && (p.x < SCREEN_WIDTH) && (p.y >= 0)
+		&& (p.y < SCREEN_HEIGHT))
 	{
 		dst = data->addr + (p.y * data->line_length + p.x
 				* (data->bits_per_pixel / 8));
@@ -47,12 +47,21 @@ void	draw_line(t_point p0, t_point p1, t_data *data, int c[2])
 {
 	t_point	d;
 	t_point	s;
+	int		steps;
+	int		i;
 	float	f;
 
 	init_delta_sign(&d, &s, p0, p1);
-	f = 0;
+	steps = ft_abs(p1.x - p0.x);
+	if (ft_abs(p1.y - p0.y) > steps)
+		steps = ft_abs(p1.y - p0.y);
+	i = 0;
 	while (!(p0.x == p1.x && p0.y == p1.y))
 	{
+		if (steps == 0)
+			f = 1.0f;
+		else
+			f = (float)i / (float)steps;
 		my_mlx_pixel_put(data, p0, interpolate(c, f));
 		s.z = d.z;
 		if (s.z > -d.x)
@@ -65,5 +74,7 @@ void	draw_line(t_point p0, t_point p1, t_data *data, int c[2])
 			d.z += d.x;
 			p0.y += s.y;
 		}
+		i++;
 	}
+	my_mlx_pixel_put(data, p1, c[1]);
 }

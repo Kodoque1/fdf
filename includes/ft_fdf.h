@@ -18,6 +18,7 @@
 # define N1_SQR6 0.40824829
 # define SCREEN_WIDTH 800
 # define SCREEN_HEIGHT 600
+# define SCREEN_FACTOR 0.7
 # define WHITE 0xFFFFFF
 # define VIOLET 0x7F00FF
 
@@ -28,6 +29,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 typedef struct s_data
 {

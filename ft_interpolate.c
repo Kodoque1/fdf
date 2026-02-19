@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:14:39 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/11 20:03:33 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/12 12:34:00 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,35 @@
 
 int	interpolate(int c[2], float f)
 {
-	int		rgb[3];
+	int		r;
+	int		g;
+	int		b;
 	float	cf;
 
-	cf = 1 - f;
-	rgb[0] = ((c[0] && 0xFF) * f + (c[1] && 0xFF) * cf);
-	rgb[1] = ((c[0] && 0xFF00) * f + (c[1] && 0xFF00) * cf);
-	rgb[2] = ((c[0] && 0xFF0000) * f + (c[1] && 0xFF0000) * cf);
-	return (rgb[0] && 0xFF + rgb[1] && 0xFF + rgb[2] && 0xFF);
+	cf = 1.0f - f;
+	r = (int)(((c[0] >> 16) & 0xFF) * cf + ((c[1] >> 16) & 0xFF) * f);
+	g = (int)(((c[0] >> 8) & 0xFF) * cf + ((c[1] >> 8) & 0xFF) * f);
+	b = (int)((c[0] & 0xFF) * cf + (c[1] & 0xFF) * f);
+	return ((r << 16) | (g << 8) | b);
 }
 
 int	p2c(t_map *map, t_point p)
 {
 	float	f;
-	float	cf;
+	int		range;
+	int		c[2];
 
-	f = ft_abs(p.z - map->min_z) / ft_abs(map->max_z - map->min_z);
-	return (WHITE * f + WHITE * (1 - f));
+	range = map->max_z - map->min_z;
+	if (range == 0)
+		return (WHITE);
+	f = (float)(p.z - map->min_z) / (float)range;
+	if (f < 0.5f)
+	{
+		c[0] = VIOLET;
+		c[1] = WHITE;
+		return (interpolate(c, f * 2.0f));
+	}
+	c[0] = WHITE;
+	c[1] = 0x88CCFF;
+	return (interpolate(c, (f - 0.5f) * 2.0f));
 }
