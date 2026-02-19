@@ -74,5 +74,10 @@ int	main(int argc, char **argv)
 	mlx_hook(vars.win, 17, 0, close_window, &vars);
 	mlx_hook(vars.win, 2, 1L << 0, close_window, &vars);
 	mlx_loop(vars.mlx);
+	if (vars.map)
+		free_map(vars.map);
+	if (vars.img && vars.img->img)
+		mlx_destroy_image(vars.mlx, vars.img->img);
+	mlx_destroy_window(vars.mlx, vars.win);
 	return (0);
 }
