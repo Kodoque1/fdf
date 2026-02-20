@@ -18,7 +18,7 @@ The program reads heightmap files and renders them as interconnected wireframe s
 - **Color Gradients**: Elevation-based coloring from white (lowest) to violet (highest)
 - **Proper Cleanup**: Complete resource liberation on exit with error handling
 - **Multiple Map Support**: Can load and render various `.fdf` map files
-- **Keyboard Controls**: ESC and Q keys to exit the program
+- **Keyboard Controls**: ESC and Cross button to exit the program
 
 ## Instructions
 

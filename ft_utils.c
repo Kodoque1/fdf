@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 10:01:40 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/19 18:25:00 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/20 13:37:46 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,12 @@ void	free_map(t_map *map)
 			free(map->map[0]);
 		free(map->map);
 	}
+}
+
+int	check_extension(char *str)
+{
+	int	size;
+
+	size = ft_strlen(str);
+	return ((size > 4) && ft_strncmp(str + size - 4, ".fdf", 4) == 0);
 }

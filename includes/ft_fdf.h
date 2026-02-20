@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 15:04:15 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/19 18:25:00 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/20 13:38:13 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,18 @@
 # define WHITE 0xFFFFFF
 # define VIOLET 0x7F00FF
 # define CYAN 0x00FFFF
+# define KEY_ESC 65307
+# define EVENT_DESTROY 17
+# define EVENT_KEYPRESS 2
 
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include "libft.h"
+# include <fcntl.h>
 # include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
 
 typedef struct s_data
 {
@@ -73,9 +76,10 @@ void		map_iso_proj(t_map *map);
 void		draw_map(t_map *map, t_data *data, int color);
 void		ft_translate(t_point *point, int x, int y, int z);
 void		scale_and_center(t_map *map);
-int		init_contiguous(t_map *map);
+int			init_contiguous(t_map *map);
 void		free_map(t_map *map);
 int			interpolate(int c[2], float f);
 int			p2c(t_map *map, t_point p);
+int			check_extension(char *str);
 
 #endif

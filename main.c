@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 15:04:29 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/19 18:30:22 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/20 13:37:46 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,21 @@ static void	cleanup_and_exit(t_vars *vars)
 	mlx_destroy_window(vars->mlx, vars->win);
 }
 
-int	close_window(int keycode, t_vars *vars)
+int	handle_close(t_vars *vars)
 {
-	if (keycode == 17 || keycode == 65307)
+	cleanup_and_exit(vars);
+	exit(0);
+	return (0);
+}
+
+int	handle_keypress(int keycode, t_vars *vars)
+{
+	if (keycode == KEY_ESC)
 	{
 		cleanup_and_exit(vars);
 		exit(0);
 	}
 	return (0);
-}
-
-int	check_extension(char *str)
-{
-	int	size;
-
-	size = ft_strlen(str);
-	return ((size > 4) && ft_strncmp(str + size - 4, ".fdf", 4) == 0);
 }
 
 static int	init_graphics(t_vars *vars, t_data *img)
@@ -75,8 +74,8 @@ int	main(int argc, char **argv)
 	scale_and_center(&map);
 	draw_map(&map, &img, WHITE);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-	mlx_hook(vars.win, 17, 0, close_window, &vars);
-	mlx_hook(vars.win, 2, 1L << 0, close_window, &vars);
+	mlx_hook(vars.win, EVENT_DESTROY, 0, handle_close, &vars);
+	mlx_hook(vars.win, EVENT_KEYPRESS, 1L << 0, handle_keypress, &vars);
 	mlx_loop(vars.mlx);
 	cleanup_and_exit(&vars);
 	return (0);
