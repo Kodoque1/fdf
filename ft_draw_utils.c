@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:04:11 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/19 18:16:18 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/21 23:15:58 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,27 @@ void	init_delta_sign(t_point *d, t_point *s, t_point p0, t_point p1)
 		s->y = -1;
 }
 
+static void	draw_line_step(t_point *p0, t_point *d, t_point *s)
+{
+	s->z = d->z;
+	if (s->z > -d->x)
+	{
+		d->z -= d->y;
+		p0->x += s->x;
+	}
+	if (s->z < d->y)
+	{
+		d->z += d->x;
+		p0->y += s->y;
+	}
+}
+
 void	draw_line(t_point p0, t_point p1, t_data *data, int c[2])
 {
-	t_point		d;
-	t_point		s;
+	t_point			d;
+	t_point			s;
 	unsigned int	steps;
-	int			i;
-	float		f;
+	int				i;
 
 	init_delta_sign(&d, &s, p0, p1);
 	steps = ft_abs(p1.x - p0.x);
@@ -58,22 +72,8 @@ void	draw_line(t_point p0, t_point p1, t_data *data, int c[2])
 	i = 0;
 	while (!(p0.x == p1.x && p0.y == p1.y))
 	{
-		if (steps == 0)
-			f = 1.0f;
-		else
-			f = (float)i / (float)steps;
-		my_mlx_pixel_put(data, p0, interpolate(c, f));
-		s.z = d.z;
-		if (s.z > -d.x)
-		{
-			d.z -= d.y;
-			p0.x += s.x;
-		}
-		if (s.z < d.y)
-		{
-			d.z += d.x;
-			p0.y += s.y;
-		}
+		my_mlx_pixel_put(data, p0, interpolate(c, (float)i / (float)steps));
+		draw_line_step(&p0, &d, &s);
 		i++;
 	}
 	my_mlx_pixel_put(data, p1, c[1]);

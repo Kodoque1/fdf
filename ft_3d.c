@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 11:30:57 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/19 18:14:41 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/21 22:53:44 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,13 @@ void	ft_scale(t_point *point, float sx, float sy, float sz)
 
 void	point_iso_proj(t_point *point)
 {
-	point->x = SQR3_SQR6 * (point->x - point->y);
-	point->y = N1_SQR6 * ((point->x + point->y)) - point->z;
+	int	tmp_x;
+	int	tmp_y;
+
+	tmp_x = point->x;
+	tmp_y = point->y;
+	point->x = SQR3_SQR6 * (tmp_x - tmp_y);
+	point->y = N1_SQR6 * (tmp_x + tmp_y) - point->z;
 }
 
 void	map_iso_proj(t_map *map)

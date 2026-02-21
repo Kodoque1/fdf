@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 15:04:15 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/20 13:38:13 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/21 23:15:58 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ typedef struct s_vars
 t_point		*create_point(int x, int y, int z);
 void		set_point(t_point *point, int x, int y, int z);
 int			parse_map(char *path, t_map *map);
+int			rows_and_columns_size(char *path, t_map *map);
+void		strip_newline(char *line);
+int			process_entry(char *entry, t_map *map, int i, int j);
+int			process_line(char *line, t_map *map, int j);
 void		draw_line(t_point p0, t_point p1, t_data *data, int c[2]);
 void		map_iso_proj(t_map *map);
 void		draw_map(t_map *map, t_data *data, int color);
@@ -81,5 +85,8 @@ void		free_map(t_map *map);
 int			interpolate(int c[2], float f);
 int			p2c(t_map *map, t_point p);
 int			check_extension(char *str);
+void		cleanup_and_exit(t_vars *vars);
+int			handle_close(t_vars *vars);
+int			handle_keypress(int keycode, t_vars *vars);
 
 #endif

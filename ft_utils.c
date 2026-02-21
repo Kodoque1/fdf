@@ -6,7 +6,7 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 10:01:40 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/20 13:37:46 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/21 22:53:44 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_point	*create_point(int x, int y, int z)
 	t_point	*point;
 
 	point = malloc(sizeof(t_point));
+	if (!point)
+		return (NULL);
 	point->x = x;
 	point->y = y;
 	point->z = z;
@@ -61,8 +63,7 @@ void	free_map(t_map *map)
 		return ;
 	if (map->map)
 	{
-		if (map->map[0])
-			free(map->map[0]);
+		free(map->map[0]);
 		free(map->map);
 	}
 }

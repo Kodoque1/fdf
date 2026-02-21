@@ -6,29 +6,35 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:01:34 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/21 22:37:32 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/21 23:15:58 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
-static int	count_line_words(char *line)
+static int	validate_and_count_rows(int f, t_map *map)
 {
-	int	i;
+	char	*buf;
+	int		words;
 
-	i = 0;
-	while (line[i] && line[i] != '\n')
-		i++;
-	if (i > 0 && line[i] == '\n')
-		line[i] = '\0';
-	return (count_word(line, ' '));
+	buf = get_next_line(f);
+	while (buf)
+	{
+		strip_newline(buf);
+		words = count_word(buf, ' ');
+		if (words != map->w)
+			return (free(buf), close(f), -1);
+		map->h++;
+		free(buf);
+		buf = get_next_line(f);
+	}
+	return (0);
 }
 
 int	rows_and_columns_size(char *path, t_map *map)
 {
 	int		f;
 	char	*buf;
-	int		words;
 
 	map->w = 0;
 	map->h = 0;
@@ -38,55 +44,17 @@ int	rows_and_columns_size(char *path, t_map *map)
 	buf = get_next_line(f);
 	if (!buf)
 		return (close(f), -1);
-	map->w = count_line_words(buf);
-	while (buf)
-	{
-		words = count_line_words(buf);
-		if (words != map->w)
-			return (free(buf), close(f), -1);
-		map->h++;
-		free(buf);
-		buf = get_next_line(f);
-	}
-	if (close(f) == -1)
+	strip_newline(buf);
+	map->w = count_word(buf, ' ');
+	if (map->w <= 0)
+		return (free(buf), close(f), -1);
+	map->h = 1;
+	free(buf);
+	if (validate_and_count_rows(f, map) == -1)
 		return (-1);
-	return (0);
-}
-
-int	process_entry(char *entry, t_map *map, int i, int j)
-{
-	int	e2i;
-
-	if (!entry)
+	close(f);
+	if (map->h == 0)
 		return (-1);
-	e2i = ft_atoi(entry);
-	if (e2i < map->min_z)
-		map->min_z = e2i;
-	if (e2i > map->max_z)
-		map->max_z = e2i;
-	set_point(&(map->map[j][i]), i, j, e2i);
-	return (0);
-}
-
-int	process_line(char *line, t_map *map, int j)
-{
-	char	**strs;
-	int		i;
-
-	if (!line)
-		return (-1);
-	strs = ft_split(line, ' ');
-	free(line);
-	if (!strs)
-		return (-1);
-	i = 0;
-	while (strs[i])
-	{
-		if (process_entry(strs[i], map, i, j) == -1)
-			return (free_array(strs), -1);
-		i++;
-	}
-	free_array(strs);
 	return (0);
 }
 
