@@ -6,16 +6,29 @@
 /*   By: zaddi <zaddi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 16:01:34 by zaddi             #+#    #+#             */
-/*   Updated: 2026/02/19 18:25:00 by zaddi            ###   ########.fr       */
+/*   Updated: 2026/02/21 22:37:32 by zaddi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_fdf.h"
 
+static int	count_line_words(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] != '\n')
+		i++;
+	if (i > 0 && line[i] == '\n')
+		line[i] = '\0';
+	return (count_word(line, ' '));
+}
+
 int	rows_and_columns_size(char *path, t_map *map)
 {
 	int		f;
 	char	*buf;
+	int		words;
 
 	map->w = 0;
 	map->h = 0;
@@ -25,10 +38,11 @@ int	rows_and_columns_size(char *path, t_map *map)
 	buf = get_next_line(f);
 	if (!buf)
 		return (close(f), -1);
-	map->w = count_word(buf, ' ');
+	map->w = count_line_words(buf);
 	while (buf)
 	{
-		if (count_word(buf, ' ') != map->w)
+		words = count_line_words(buf);
+		if (words != map->w)
 			return (free(buf), close(f), -1);
 		map->h++;
 		free(buf);
